@@ -146,12 +146,6 @@ module connect_four (
 	wire winning_diag_left_down_3;
 	wire winning_diag_left_down_4;
 
-	// Victory and flashing pieces logic
-	reg [25:0] flash_counter;
-	wire toggle_flash;
-	reg show_winning_pieces;
-	reg winning_pieces [0:ROWS - 1][0:COLS - 1];
-
 	// Assign outputs
 	assign port_board_out = board_out;
 	assign port_current_col = current_col;
@@ -323,7 +317,6 @@ module connect_four (
 						for (j = 0; j < COLS; j = j + 1)
 							begin
 								board[i][j] <= 2'b00;
-								winning_pieces[i][j] <= 1'b0;
 							end
 					end
 			end
@@ -345,10 +338,6 @@ module connect_four (
 					if (winning_down)
 					begin
 						game_over <= 1'b1;
-						winning_pieces[current_row][current_col] <= 1'b1;
-						winning_pieces[current_row - 1][current_col] <= 1'b1;
-						winning_pieces[current_row - 2][current_col] <= 1'b1;
-						winning_pieces[current_row - 3][current_col] <= 1'b1;
 					end
 				end
 				ST_CHECKING_ROW_1:
@@ -357,10 +346,6 @@ module connect_four (
 					if (winning_row_1)
 					begin
 						game_over <= 1'b1;
-						winning_pieces[current_row][current_col] <= 1'b1;
-						winning_pieces[current_row][current_col - 1] <= 1'b1;
-						winning_pieces[current_row][current_col - 2] <= 1'b1;
-						winning_pieces[current_row][current_col - 3] <= 1'b1;
 					end
 				end
 				ST_CHECKING_ROW_2:
@@ -369,10 +354,6 @@ module connect_four (
 					if (winning_row_2)
 					begin
 						game_over <= 1'b1;
-						winning_pieces[current_row][current_col + 1] <= 1'b1;
-						winning_pieces[current_row][current_col] <= 1'b1;
-						winning_pieces[current_row][current_col - 1] <= 1'b1;
-						winning_pieces[current_row][current_col - 2] <= 1'b1;
 					end
 				end
 				ST_CHECKING_ROW_3:
@@ -381,10 +362,6 @@ module connect_four (
 					if (winning_row_3)
 					begin
 						game_over <= 1'b1;
-						winning_pieces[current_row][current_col + 2] <= 1'b1;
-						winning_pieces[current_row][current_col + 1] <= 1'b1;
-						winning_pieces[current_row][current_col] <= 1'b1;
-						winning_pieces[current_row][current_col - 1] <= 1'b1;
 					end
 				end
 				ST_CHECKING_ROW_4:
@@ -393,10 +370,6 @@ module connect_four (
 					if (winning_row_4)
 					begin
 						game_over <= 1'b1;
-						winning_pieces[current_row][current_col + 3] <= 1'b1;
-						winning_pieces[current_row][current_col + 2] <= 1'b1;
-						winning_pieces[current_row][current_col + 1] <= 1'b1;
-						winning_pieces[current_row][current_col] <= 1'b1;
 					end
 				end
 				ST_CHECKING_DIAG_RIGHT_UP_1:
@@ -405,10 +378,6 @@ module connect_four (
 					if (winning_diag_right_up_1)
 					begin
 						game_over <= 1'b1;
-						winning_pieces[current_row][current_col] <= 1'b1;
-						winning_pieces[current_row - 1][current_col - 1] <= 1'b1;
-						winning_pieces[current_row - 2][current_col - 2] <= 1'b1;
-						winning_pieces[current_row - 3][current_col - 3] <= 1'b1;
 					end
 				end
 				ST_CHECKING_DIAG_RIGHT_UP_2:
@@ -417,10 +386,6 @@ module connect_four (
 					if (winning_diag_right_up_2)
 					begin
 						game_over <= 1'b1;
-						winning_pieces[current_row + 1][current_col + 1] <= 1'b1;
-						winning_pieces[current_row][current_col] <= 1'b1;
-						winning_pieces[current_row - 1][current_col - 1] <= 1'b1;
-						winning_pieces[current_row - 2][current_col - 2] <= 1'b1;
 					end
 				end
 				ST_CHECKING_DIAG_RIGHT_UP_3:
@@ -429,10 +394,6 @@ module connect_four (
 					if (winning_diag_right_up_3)
 					begin
 						game_over <= 1'b1;
-						winning_pieces[current_row + 2][current_col + 2] <= 1'b1;
-						winning_pieces[current_row + 1][current_col + 1] <= 1'b1;
-						winning_pieces[current_row][current_col] <= 1'b1;
-						winning_pieces[current_row - 1][current_col - 1] <= 1'b1;
 					end
 				end
 				ST_CHECKING_DIAG_RIGHT_UP_4:
@@ -441,10 +402,6 @@ module connect_four (
 					if (winning_diag_right_up_4)
 					begin
 						game_over <= 1'b1;
-						winning_pieces[current_row + 3][current_col + 3] <= 1'b1;
-						winning_pieces[current_row + 2][current_col + 2] <= 1'b1;
-						winning_pieces[current_row + 1][current_col + 1] <= 1'b1;
-						winning_pieces[current_row][current_col] <= 1'b1;
 					end
 				end
 				ST_CHECKING_DIAG_LEFT_DOWN_1:
@@ -453,10 +410,6 @@ module connect_four (
 					if (winning_diag_left_down_1)
 					begin
 						game_over <= 1'b1;
-						winning_pieces[current_row][current_col] <= 1'b1;
-						winning_pieces[current_row + 1][current_col - 1] <= 1'b1;
-						winning_pieces[current_row + 2][current_col - 2] <= 1'b1;
-						winning_pieces[current_row + 3][current_col - 3] <= 1'b1;
 					end
 				end
 				ST_CHECKING_DIAG_LEFT_DOWN_2:
@@ -465,10 +418,6 @@ module connect_four (
 					if (winning_diag_left_down_2)
 					begin
 						game_over <= 1'b1;
-						winning_pieces[current_row - 1][current_col + 1] <= 1'b1;
-						winning_pieces[current_row][current_col] <= 1'b1;
-						winning_pieces[current_row + 1][current_col - 1] <= 1'b1;
-						winning_pieces[current_row + 2][current_col - 2] <= 1'b1;
 					end
 				end
 				ST_CHECKING_DIAG_LEFT_DOWN_3:
@@ -477,10 +426,6 @@ module connect_four (
 					if (winning_diag_left_down_3)
 					begin
 						game_over <= 1'b1;
-						winning_pieces[current_row - 2][current_col + 2] <= 1'b1;
-						winning_pieces[current_row - 1][current_col + 1] <= 1'b1;
-						winning_pieces[current_row][current_col] <= 1'b1;
-						winning_pieces[current_row + 1][current_col - 1] <= 1'b1;
 					end
 				end
 				ST_CHECKING_DIAG_LEFT_DOWN_4:
@@ -489,10 +434,6 @@ module connect_four (
 					if (winning_diag_left_down_4)
 					begin
 						game_over <= 1'b1;
-						winning_pieces[current_row - 3][current_col + 3] <= 1'b1;
-						winning_pieces[current_row - 2][current_col + 2] <= 1'b1;
-						winning_pieces[current_row - 1][current_col + 1] <= 1'b1;
-						winning_pieces[current_row][current_col] <= 1'b1;
 					end
 				end
 				ST_VICTORY:
@@ -511,25 +452,6 @@ module connect_four (
 			endcase
 	end
 
-	// Flashing counter
-	always @(posedge clk or negedge rst_n)
-	begin
-		if (~rst_n)
-		begin
-			flash_counter <= 24'd0;
-			show_winning_pieces <= 1'b1;
-		end
-		else if (game_over)
-		begin
-			if (flash_counter == FLASH_COUNTER_MAX)
-			begin
-				flash_counter <= 24'd0;
-				show_winning_pieces <= ~show_winning_pieces;
-			end
-			else
-				flash_counter <= flash_counter + 24'd1;
-		end
-	end
 
 	// Output the board state
 	always @(*)
@@ -544,8 +466,6 @@ module connect_four (
 					for (col = 0; col < COLS; col = col + 1)
 						begin
 							board_out[((((ROWS - 1) - row) * COLS) + ((COLS - 1) - col)) * 2+:2] = board[row][col];
-							if (winning_pieces[row][col])
-								board_out[((((ROWS - 1) - row) * COLS) + ((COLS - 1) - col)) * 2+:2] = (show_winning_pieces ? winner : EMPTY);
 						end
 				end
 		end
