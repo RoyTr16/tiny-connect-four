@@ -74,7 +74,7 @@ module tt_um_RoyTr16 (
 
   connect_four_top game_inst (
     .clk_25MHz       (clk),
-    .rst_n           (rst_n),
+    .rst_n           (clk_in_rst_n_sync),
     .move_right      (move_right_debounced),
     .move_left       (move_left_debounced),
     .drop_piece      (drop_piece_debounced),
@@ -94,11 +94,11 @@ module tt_um_RoyTr16 (
   );
 
   btn_debounce #(
-    .CLKS_TO_WAIT(2500000),
+    .CLKS_TO_WAIT(22'h3FFFFF),
     .N_BUTTONS(3)
   ) btn_right_debounce_inst (
     .clk      (clk),
-    .rst_n    (rst_n),
+    .rst_n    (clk_in_rst_n_sync),
     .e_debug  (e_debug),
     .btns_in   ({move_right, move_left, drop_piece}),
     .btns_out  ({move_right_debounced, move_left_debounced, drop_piece_debounced})
@@ -106,7 +106,7 @@ module tt_um_RoyTr16 (
 
 	debug_controller debug_ctrl (
 		.clk(clk),
-		.rst_n(rst_n),
+		.rst_n(clk_in_rst_n_sync),
 		.e_debug(e_debug),
 		.piece_data(d_piece_data),
     .current_col(current_col),

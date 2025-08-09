@@ -75,7 +75,7 @@ module connect_four_top #(ROWS=8, COLS=8) (
 	localparam PLAYER2_COLOR_B = 2'b00;
 
 	// Winning pieces flashing counter
-	localparam FLASH_COUNTER_MAX = 12_500_000;
+	localparam FLASH_COUNTER_MAX = 23'h7FFFFF;
 	localparam FLASH_COUNTER_BITS = $clog2(FLASH_COUNTER_MAX);
 
 	// Victory and flashing pieces logic
