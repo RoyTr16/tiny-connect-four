@@ -1,8 +1,8 @@
 # Tiny Tapeout project information
 project:
-  title:        "Connect Four VGA" # Project title
-  author:       "Roy Treves"       # Your name
-  discord:      "roy_trv"          # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
+  title:        "Tiny Connect Four" # Project title
+  author:       "Roy Treves"        # Your name
+  discord:      "roy_trv"           # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
   # One line description of what your project does
   description:  "A simple connect four game with VGA output"
   language:     "Verilog"          # other examples include SystemVerilog, Amaranth, VHDL, etc

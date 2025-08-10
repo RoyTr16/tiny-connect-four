@@ -49,17 +49,54 @@ Responsible for checking which directions need to be examined to see whether the
 #### `direction_checker.v`
 Responsible for checking whether a specific direction has a winning combination. Receives as an input a tile index and a direction, as well as start signal. After the start signal, the module outputs sequentially the indices of the tiles in the relevant direction, reads them from `board_rw`, and stores them. Then, it checks whether the contents of the tiles are identical and not empty. If they are, the player whose pieces are in the winning combination is set to be the winner of the game.
 
+#### `pwrup_synchronizer.v`
+This module implements a power-up synchronizer circuit that provides synchronized reset release functionality. This module generates a clean, synchronized reset signal that is released after the clock becomes stable during power-up sequences.
+
+
+
 
 ## How to test
 
+<div style="display: flex; align-items: flex-start;">
+<div style="flex: 1; margin-right: 20px;">
+
 Connect the external hardware according to the specified pinout, and play the connect four game. The floating piece cursor above the board represents the column which the piece will be dropped to. There is one key for moving the cursor left, one for moving it right, and one for dropping the piece. The game ends when one player has 4 consecutive pieces vertically, horizontally, or diagonally.
+
+</div>
+<div style="flex-shrink: 0;">
+<img src="connect-four.jpg" width=120>
+</div>
+</div>
 
 ## External hardware
 
-3 Keys are needed for:
+3 Keys (buttons) are needed for:
 1. Dropping pieces
 2. Moving right
 3. Moving left
 
 Additionally a VGA module is required to connect the board to an external display.
-Optionally, a passive buzzer may be connected to play sound effects (NOTE: the buzzer does not work in debug mode)
+Optionally, a passive buzzer may be connected to play sound effects (NOTE: the buzzer does not work in debug mode, which is active when `ui[7]` is high (VCC), and inactive when it is low (Ground)).
+
+### External Hardware Connection Instructions
+
+#### Connecting the Keys
+1. Place 3 push-button switches on a breadboard, positioning them to span across the center gap
+2. For each key:
+  - Connect one terminal to the corresponding `ui` input on the PCB:
+    - Key 1 (Drop piece) → `ui[0]`
+    - Key 2 (Move right) → `ui[1]`
+    - Key 3 (Move left) → `ui[2]`
+  - Connect a 10kΩ pull-up resistor from terminal across the one we just connected, to VCC
+  - Connect the opposite terminal to Ground
+3. This creates a pull-up configuration where pressing a key pulls the input low
+
+#### Connecting the Buzzer (Optional)
+1. Connect the positive terminal of a passive buzzer to `uio[0]`
+2. Connect the negative terminal to Ground
+3. **Important:** Ensure `ui[7]` is connected to Ground - the buzzer will not function in debug mode when `ui[7]` is high
+
+#### VGA Display
+Connect a standard VGA module to the designated VGA output pins for display functionality.
+
+<img src="keys.jpg">
