@@ -69,7 +69,7 @@ module tt_um_RoyTr16 (
   assign e_debug = ui_in [7];
 
   assign d_uio_in = uio_in;
-  assign uio_out = e_debug ? d_uio_out : {buzzer_out, {7{1'b0}}};
+  assign uio_out = e_debug ? d_uio_out : {{7{1'b0}}, buzzer_out};
   assign uio_oe = e_debug ? d_uio_oe : 8'b11111111;
 
   connect_four_top game_inst (
