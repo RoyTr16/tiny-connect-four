@@ -92,7 +92,7 @@ Optionally, a passive buzzer may be connected to play sound effects (NOTE: the b
 3. This creates a pull-up configuration where pressing a key pulls the input low
 
 #### Connecting the Buzzer (Optional)
-1. Connect the positive terminal of a passive buzzer to `uio[0]`
+1. Connect the positive terminal of a passive buzzer to `uio[7]`
 2. Connect the negative terminal to Ground
 3. **Important:** Ensure `ui[7]` is connected to Ground - the buzzer will not function in debug mode when `ui[7]` is high
 

@@ -55,14 +55,14 @@ pinout:
   uo[7]: "VGA hsync"
 
   # Bidirectional pins
-  uio[0]: "Debug pin / Buzzer"
+  uio[0]: "Debug pin"
   uio[1]: "Debug pin"
   uio[2]: "Debug pin"
   uio[3]: "Debug pin"
   uio[4]: "Debug pin"
   uio[5]: "Debug pin"
   uio[6]: "Debug pin"
-  uio[7]: "Debug pin"
+  uio[7]: "Debug pin / Buzzer"
 
 # Do not change!
 yaml_version: 6
